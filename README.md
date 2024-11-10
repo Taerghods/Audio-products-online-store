@@ -1,5 +1,4 @@
 # Audio products online store
-## Database design and several queries of an online store that sells audio products
 
 ## [Description:](https://github.com/markdown-it/markdown-it-sub)
 ### Database design and several queries of an online store that sells audio products.
