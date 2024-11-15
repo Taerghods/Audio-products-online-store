@@ -20,20 +20,24 @@ join Tracks T on Al.album_id = T.album_id group by Al.album_id order by sum_pric
 select track_id, quantity from order_items oi
 where oi.quantity >= 0.6 * (select max(quantity) from order_items oi) order by oi.quantity desc;
 
---q3:?
+--q3:
 select Ar.artist_name, Ar.artist_lastname from Artists Ar
-inner join Tracks T on Ar.artist_id = T.artist_id where T.genre = 'rock' group by Ar.artist_id, Ar.artist_name, Ar.artist_lastname having count(T.track_id) >= 10;
+join Albums Al on Ar.artist_id = Al.artist_id
+join Tracks T on Al.album_id = T.album_id 
+where T.genre = 'rock' group by Ar.artist_id, Ar.artist_name, Ar.artist_lastname having count(T.track_id) >= 10;
 
---q4:?
-select B.buyer_name, max(oi.buy_time) from Buyers B 
-join order_items oi on B.buyer_id = oi.buyer_id group by B.buyer_name order by oi.buy_time
+--q4:
+select B.buyer_name, oi.buy_time from Buyers B
+join Orders O on B.buyer_id = O.buyer_id
+join order_items oi on O.order_id = oi.order_id
+group by B.buyer_name, oi.buy_time order by oi.buy_time desc limit 1;
 
 -- q5:
 select Al.album_id, Al.album_name from Albums Al
 join Tracks T on Al.album_id = T.album_id
 join order_items OI on T.track_id = OI.track_id group by Al.album_id, Al.album_name having sum(OI.quantity) = 1;
 
---q6:
+--q6: ??
 update Tracks set T.price = T.price * 0.5
 where (select sum(oi.quantity * T.price) from order_items oi
 where oi.track_id = T.track_id) < 0.002 * (select sum(oi2.quantity * T2.price) from order_items oi2

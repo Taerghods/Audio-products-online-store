@@ -39,6 +39,7 @@ create table Orders(
 
 create table order_items(
 	order_item_id serial primary key,
+	buy_time timestamp default now(),
 	quantity int not null,
 	price_notification int not null,
 	total int not null,
